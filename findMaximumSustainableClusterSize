@@ -1,0 +1,39 @@
+using System;
+using System.Collections.Generic;
+					
+public class Program
+{
+	public static void Main()
+	{
+		List<int> processingPower = new List<int>(new int[] { 1, 2, 3,4 } );
+		List<int> bootingPower = new List<int>(new int[] { 1, 2, 3,4 } );
+        int powerMax = 10;
+		int result = findMaximumSustainableClusterSize(processingPower,bootingPower,powerMax);
+		Console.WriteLine(result);
+	}
+
+	
+  	public static int findMaximumSustainableClusterSize(List<int> processingPower, List<int> bootingPower, long powerMax) {
+        int len = processingPower.Count;
+        if(len == 0 || processingPower == null || bootingPower == null) return 0;
+        int ans = 0;
+        for(int i=0;i<len;i++){
+            int count = 1, maxCount=1, sum =0, mul;
+            int max = 0;
+            for(int j=i;j<len;j++){
+                sum = sum + processingPower[j];
+                mul = sum * count;
+                count++;
+
+                max = Math.Max(max,bootingPower[j]);
+                long tempPower = mul + max;
+                if(tempPower <= powerMax){
+                    Console.WriteLine(tempPower);
+                    ans = Math.Max(maxCount, ans);
+                    maxCount++;
+                }else {maxCount = 1;}
+            }
+        }
+        return ans;
+	}
+}
