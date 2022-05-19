@@ -1,0 +1,47 @@
+public static void Main(string[] args)
+    {
+        int numberOfFlower = Convert.ToInt32(Console.ReadLine());
+        List<char> flowers = new List<char>();
+
+        int m = numberOfFlower * 2;
+        for (int i = numberOfFlower; i >= 0; i--)
+            flowers.Add(Convert.ToChar(64 + i));
+
+        char[,] grid = new char[m,m];
+
+        for (int c = 0; c < m; c++)
+            grid[0,c] = flowers[0];
+
+        for (int i=1;i<m/2;i++)
+        {
+            int j = 0;
+            while (j < i)
+            {
+                grid[i, j] = grid[i - 1, j];
+                grid[i, m - 1 - j] = grid[i - 1, m - 1 - j];
+                j++;
+            }
+            for (int k=j;k<m-i;k++)
+            {
+                grid[i, k] = flowers[i];
+            }
+        }
+
+        for(int i=m-1;i>=(m/2);i--)
+        {
+            for(int j=0; j<m;j++)
+            {
+                grid[i, j] = grid[m - i - 1, j];
+            }
+        }
+
+        //print grid
+        for (int i = 0; i < m; i++)
+        {
+            Console.WriteLine();
+            for (int j = 0; j < m; j++)
+                Console.Write(grid[i, j]);
+        }
+
+        Console.ReadLine();
+    }
